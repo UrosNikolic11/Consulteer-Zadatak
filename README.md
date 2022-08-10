@@ -5,6 +5,7 @@
 I have created data model for Post and Comment as required.
 
 Post entity has the following fields:
+
 Long id - autoincrement,
 
 String title - required,
