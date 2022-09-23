@@ -46,7 +46,8 @@ class PostControllerTest {
 
     @Test
     void shouldCreatePost() throws Exception {
-        when(postService.createPost(any(CreatePostDto.class))).thenReturn(new ResponseEntity<>(new PostDto(11L, "Title", "Content", 0, 0), OK).getBody());
+        when(postService.create(any(CreatePostDto.class))).thenReturn(new ResponseEntity<>(new PostDto(11L, "Title",
+                "Content", 0, 0), OK).getBody());
 
         Gson gson = new Gson();
         mvc.perform(post("/post/create")
@@ -62,9 +63,12 @@ class PostControllerTest {
 
     @Test
     void shouldUpdatePost() throws Exception {
-        when(postService.updatePost(any(Long.class),any(PostDto.class))).thenReturn(new ResponseEntity<>(new PostDto(2L, "UpdateTitle", "UpdateContent", 0, 0), OK).getBody());
+        when(postService.update(any(Long.class),any(PostDto.class))).thenReturn(new ResponseEntity<>(new PostDto(2L, "UpdateTitle",
+                "UpdateContent", 0, 0), OK).getBody());
         Gson gson = new Gson();
-                mvc.perform(put("/post/2").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(new PostDto(2L, "UpdateTitle", "UpdateContent", 0, 0))).accept(MediaType.APPLICATION_JSON))
+                mvc.perform(put("/post/2").contentType(MediaType.APPLICATION_JSON)
+                                .content(gson.toJson(new PostDto(2L, "UpdateTitle",
+                                        "UpdateContent", 0, 0))).accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$.title").value("UpdateTitle"))
                         .andExpect(jsonPath("$.content").value("UpdateContent"))
@@ -74,7 +78,8 @@ class PostControllerTest {
 
     @Test
     void shouldLikePost()throws Exception{
-        when(postService.likePost(any(Long.class))).thenReturn(new ResponseEntity<>(new PostDto(2L, "LikeTitle", "LikeContent", 1, 0), OK).getBody());
+        when(postService.like(any(Long.class))).thenReturn(new ResponseEntity<>(new PostDto(2L, "LikeTitle",
+                "LikeContent", 1, 0), OK).getBody());
         Gson gson = new Gson();
         mvc.perform(put("/post/like/2").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -83,7 +88,8 @@ class PostControllerTest {
 
     @Test
     void shouldDisLikePost() throws Exception{
-        when(postService.dislikePost(any(Long.class))).thenReturn(new ResponseEntity<>(new PostDto(2L, "DisLikeTitle", "DisLikeContent", 0, 1), OK).getBody());
+        when(postService.dislike(any(Long.class))).thenReturn(new ResponseEntity<>(new PostDto(2L, "DisLikeTitle",
+                "DisLikeContent", 0, 1), OK).getBody());
         Gson gson = new Gson();
         mvc.perform(put("/post/dislike/2").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

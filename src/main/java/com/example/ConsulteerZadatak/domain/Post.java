@@ -2,8 +2,6 @@ package com.example.ConsulteerZadatak.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "post")
@@ -19,8 +17,6 @@ public class Post {
     private String content;
     private Integer likes;
     private Integer dislikes;
-    @OneToMany(mappedBy = "post")
-    private List<Comment> comments = new ArrayList<Comment>();
 
     public Post() {
     }
@@ -73,11 +69,4 @@ public class Post {
         this.dislikes = dislikes;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
 }

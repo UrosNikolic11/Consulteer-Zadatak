@@ -14,45 +14,45 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/post")
 public class PostController {
-    private PostService postService;
+    private final PostService postService;
 
     public PostController(PostService postService) {
         this.postService = postService;
     }
 
     @PostMapping("/create")
-    public ResponseEntity<PostDto> createPost(@RequestBody @Valid CreatePostDto createPostDto) {
-        return new ResponseEntity<>(postService.createPost(createPostDto), HttpStatus.CREATED);
+    public ResponseEntity<PostDto> create(@RequestBody @Valid CreatePostDto createPostDto) {
+        return new ResponseEntity<>(postService.create(createPostDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostDto> updatePost(@PathVariable("id") Long id
+    public ResponseEntity<PostDto> update(@PathVariable("id") Long id
             , @RequestBody @Valid PostDto postDto) {
-        return new ResponseEntity<>(postService.updatePost(id, postDto), HttpStatus.OK);
+        return new ResponseEntity<>(postService.update(id, postDto), HttpStatus.OK);
     }
 
     @PutMapping("/like/{id}")
-    public ResponseEntity<PostDto> likePost(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(postService.likePost(id), HttpStatus.OK);
+    public ResponseEntity<PostDto> like(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(postService.like(id), HttpStatus.OK);
     }
 
     @PutMapping("/dislike/{id}")
-    public ResponseEntity<PostDto> dislikePost(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(postService.dislikePost(id), HttpStatus.OK);
+    public ResponseEntity<PostDto> dislike(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(postService.dislike(id), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<Page<PostDto>> allPosts(Pageable pageable) {
+    public ResponseEntity<Page<PostDto>> findAll(Pageable pageable) {
         return new ResponseEntity<>(postService.findAll(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostDto> findPost(@PathVariable("id") Long id) {
+    public ResponseEntity<PostDto> findById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(postService.findById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deletePost(@PathVariable("id") Long id){
+    public void delete(@PathVariable("id") Long id){
         postService.remove(id);
     }
 }

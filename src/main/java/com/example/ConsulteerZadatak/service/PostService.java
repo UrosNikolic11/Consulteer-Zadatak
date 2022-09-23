@@ -6,11 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface PostService {
-     PostDto createPost(CreatePostDto createPostDto);
+     PostDto create(CreatePostDto createPostDto);
      Page<PostDto> findAll(Pageable pageable);
      PostDto findById(Long id);
-     PostDto updatePost(Long id, PostDto postDto);
+     PostDto update(Long id, PostDto postDto);
      void remove(Long id);
-     PostDto likePost(Long id);
-     PostDto dislikePost(Long id);
+     PostDto like(Long id);
+     PostDto dislike(Long id);
 }

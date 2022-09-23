@@ -12,43 +12,27 @@ public class PostMapper {
     public PostMapper() {
     }
 
-    public PostDto postToPostDto(Post post){
-        PostDto postDto = new PostDto();
-        postDto.setId(post.getId());
-        postDto.setTitle(post.getTitle());
-        postDto.setContent(post.getContent());
-        postDto.setLikes(post.getLikes());
-        postDto.setDislikes(post.getDislikes());
-        return postDto;
+    public PostDto map(Post post){
+        return new PostDto(post.getId(), post.getTitle(), post.getContent(), post.getLikes(), post.getDislikes());
     }
 
-    public Post postDtoToPost(PostDto postDto){
-        Post post = new Post();
+    public Post map(PostDto postDto){
         if(postDto.getTitle().equals("")){
             throw new BadRequestException("Title is required!");
         }
-        else post.setTitle(postDto.getTitle());
-        if(postDto.getContent().equals("")){
+        else if(postDto.getContent().equals("")){
             throw new BadRequestException("Content is required!");
         }
-        else post.setContent(postDto.getContent());
-        post.setLikes(postDto.getLikes());
-        post.setDislikes(postDto.getDislikes());
-        return post;
+        return new Post(null, postDto.getTitle(), postDto.getContent(), postDto.getLikes(), postDto.getDislikes());
     }
 
-    public Post createPostDtoToPost(CreatePostDto createPostDto){
-        Post post = new Post();
+    public Post map(CreatePostDto createPostDto){
         if(createPostDto.getTitle().equals("")){
             throw new BadRequestException("Title is required!");
         }
-        else post.setTitle(createPostDto.getTitle());
         if(createPostDto.getContent().equals("")){
             throw new BadRequestException("Content is required!");
         }
-        else post.setContent(createPostDto.getContent());
-        post.setLikes(0);
-        post.setDislikes(0);
-        return post;
+        return new Post(null, createPostDto.getTitle(), createPostDto.getContent(), 0, 0);
     }
 }

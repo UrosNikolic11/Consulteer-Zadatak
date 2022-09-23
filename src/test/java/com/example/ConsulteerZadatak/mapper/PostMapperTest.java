@@ -9,38 +9,35 @@ import org.junit.jupiter.api.Test;
 class PostMapperTest {
 
     @Test
-    void dtoToOriginalTest(){
-        Post post = new Post(1L, "Post", "Post", 0, 0);
+    void shouldMapPostDtoToPost(){
         PostDto postDto = new PostDto(1L, "Post", "Post", 0, 0);
         PostMapper postMapper = new PostMapper();
-        Post test = postMapper.postDtoToPost(postDto);
-        Assertions.assertEquals(post.getTitle(), test.getTitle());
-        Assertions.assertEquals(post.getContent(), test.getContent());
-        Assertions.assertEquals(post.getLikes(), test.getLikes());
-        Assertions.assertEquals(post.getDislikes(), test.getDislikes());
+        Post resault = postMapper.map(postDto);
+        Assertions.assertEquals(postDto.getTitle(), resault.getTitle());
+        Assertions.assertEquals(postDto.getContent(), resault.getContent());
+        Assertions.assertEquals(postDto.getLikes(), resault.getLikes());
+        Assertions.assertEquals(postDto.getDislikes(), resault.getDislikes());
     }
 
     @Test
-    void originalToDtoTest(){
+    void shouldMapPostToPostDto(){
         Post post = new Post(1L, "Post", "Post", 0, 0);
-        PostDto postDto = new PostDto(1L, "Post", "Post", 0, 0);
         PostMapper postMapper = new PostMapper();
-        PostDto test = postMapper.postToPostDto(post);
-        Assertions.assertEquals(postDto.getTitle(), test.getTitle());
-        Assertions.assertEquals(postDto.getContent(), test.getContent());
-        Assertions.assertEquals(postDto.getLikes(), test.getLikes());
-        Assertions.assertEquals(postDto.getDislikes(), test.getDislikes());
+        PostDto resault = postMapper.map(post);
+        Assertions.assertEquals(post.getTitle(), resault.getTitle());
+        Assertions.assertEquals(post.getContent(), resault.getContent());
+        Assertions.assertEquals(post.getLikes(), resault.getLikes());
+        Assertions.assertEquals(post.getDislikes(), resault.getDislikes());
     }
 
     @Test
-    void createDtoToOriginalTest(){
-        Post post = new Post(1L, "Post", "Post", 0, 0);
-        CreatePostDto postDto = new CreatePostDto("Post", "Post");
+    void shouldMapCreatePostDtoToPost(){
+        CreatePostDto createPostDto = new CreatePostDto("Post", "Post");
         PostMapper postMapper = new PostMapper();
-        Post test = postMapper.createPostDtoToPost(postDto);
-        Assertions.assertEquals(post.getTitle(), test.getTitle());
-        Assertions.assertEquals(post.getContent(), test.getContent());
-        Assertions.assertEquals(post.getLikes(), test.getLikes());
-        Assertions.assertEquals(post.getDislikes(), test.getDislikes());
+        Post resault = postMapper.map(createPostDto);
+        Assertions.assertEquals(createPostDto.getTitle(), resault.getTitle());
+        Assertions.assertEquals(createPostDto.getContent(), resault.getContent());
+        Assertions.assertEquals(0, resault.getLikes());
+        Assertions.assertEquals(0, resault.getDislikes());
     }
 }

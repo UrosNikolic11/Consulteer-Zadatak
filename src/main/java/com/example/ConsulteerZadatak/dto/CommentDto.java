@@ -1,40 +1,25 @@
 package com.example.ConsulteerZadatak.dto;
 
-public class CommentDto {
-    private Long id;
-    private String comment;
-    private Long post_id;
+public final class CommentDto {
+    private final Long id;
+    private final String comment;
+    private final Long postId;
 
-    public CommentDto() {
-    }
-
-    public CommentDto(Long id, String comment, Long post_id) {
+    public CommentDto(Long id, String comment, Long postId) {
         this.id = id;
         this.comment = comment;
-        this.post_id = post_id;
+        this.postId = postId;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getComment() {
         return comment;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public Long getPost_id() {
-        return post_id;
-    }
-
-    public void setPost_id(Long post_id) {
-        this.post_id = post_id;
+    public Long getPostId() {
+        return postId;
     }
 }

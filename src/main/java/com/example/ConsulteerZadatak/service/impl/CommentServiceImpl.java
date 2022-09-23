@@ -1,7 +1,6 @@
 package com.example.ConsulteerZadatak.service.impl;
 
 import com.example.ConsulteerZadatak.domain.Comment;
-import com.example.ConsulteerZadatak.domain.Post;
 import com.example.ConsulteerZadatak.dto.CommentDto;
 import com.example.ConsulteerZadatak.exception.BadRequestException;
 import com.example.ConsulteerZadatak.exception.NotFoundException;
@@ -19,8 +18,8 @@ import java.util.Optional;
 @Transactional
 public class CommentServiceImpl implements CommentService {
 
-    private CommentMapper commentMapper;
-    private CommentRepository commentRepository;
+    private final CommentMapper commentMapper;
+    private final CommentRepository commentRepository;
 
     public CommentServiceImpl(CommentMapper commentMapper, CommentRepository commentRepository) {
         this.commentMapper = commentMapper;
@@ -28,31 +27,31 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDto createComment(CommentDto commentDto) {
-        Comment comment = commentMapper.commentDtoToComment(commentDto);
+    public CommentDto create(CommentDto commentDto) {
+        Comment comment = commentMapper.map(commentDto);
         commentRepository.save(comment);
-        return commentMapper.commentToCommentDto(comment);
+        return commentMapper.map(comment);
     }
 
     @Override
     public Page<CommentDto> findAll(Pageable pageable) {
         return commentRepository.findAll(pageable)
-                .map(commentMapper::commentToCommentDto);
+                .map(commentMapper::map);
     }
 
     @Override
     public CommentDto findById(Long id) {
         Optional<Comment> comment = commentRepository.findById(id);
-        if(!comment.isPresent()){
+        if(comment.isEmpty()){
             throw new NotFoundException("There is no comment with given id!");
         }
-        return commentMapper.commentToCommentDto(comment.get());
+        return commentMapper.map(comment.get());
     }
 
     @Override
-    public CommentDto updateComment(Long id, CommentDto commentDto) {
+    public CommentDto update(Long id, CommentDto commentDto) {
         Optional<Comment> comment = commentRepository.findById(id);
-        if(!comment.isPresent()){
+        if(comment.isEmpty()){
             throw new NotFoundException("There is no comment with given id!");
         }
         if(!(commentDto.getComment() == null)){
@@ -61,13 +60,13 @@ public class CommentServiceImpl implements CommentService {
             }
             comment.get().setComment(commentDto.getComment());
         }
-        return commentMapper.commentToCommentDto(comment.get());
+        return commentMapper.map(comment.get());
     }
 
     @Override
     public void remove(Long id) {
         Optional<Comment> comment = commentRepository.findById(id);
-        if(!comment.isPresent()){
+        if(comment.isEmpty()){
             throw new NotFoundException("There is no comment with given id!");
         }
         commentRepository.deleteById(id);

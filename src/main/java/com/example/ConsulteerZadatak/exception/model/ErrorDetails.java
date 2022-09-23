@@ -1,6 +1,5 @@
 package com.example.ConsulteerZadatak.exception.model;
 
-import com.example.ConsulteerZadatak.exception.ErrorCode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.Instant;

@@ -30,32 +30,32 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto createPost(CreatePostDto createPostDto) {
-        Post post = postMapper.createPostDtoToPost(createPostDto);
+    public PostDto create(CreatePostDto createPostDto) {
+        Post post = postMapper.map(createPostDto);
         postRepositroy.save(post);
-        return postMapper.postToPostDto(post);
+        return postMapper.map(post);
     }
 
     @Override
     public Page<PostDto> findAll(Pageable pageable) {
         return postRepositroy.findAll(pageable)
-                .map(postMapper::postToPostDto);
+                .map(postMapper::map);
     }
 
     @Override
     public PostDto findById(Long id) {
         Optional<Post> post = postRepositroy.findPostById(id);
 
-        if(!post.isPresent()){
+        if(post.isEmpty()){
             throw new NotFoundException("There is no post with given id!");
         }
-        return postMapper.postToPostDto(post.get());
+        return postMapper.map(post.get());
     }
 
     @Override
-    public PostDto updatePost(Long id, PostDto postDto) {
+    public PostDto update(Long id, PostDto postDto) {
         Optional<Post> post = postRepositroy.findPostById(id);
-        if(!post.isPresent()){
+        if(post.isEmpty()){
             throw new NotFoundException("There is no post with given id!");
         }
         if(!(postDto.getTitle() == null)){
@@ -77,13 +77,13 @@ public class PostServiceImpl implements PostService {
             post.get().setDislikes(postDto.getDislikes());
         }
         postRepositroy.save(post.get());
-        return postMapper.postToPostDto(post.get());
+        return postMapper.map(post.get());
     }
 
     @Override
     public void remove(Long id) {
         Optional<Post> post = postRepositroy.findPostById(id);
-        if(!post.isPresent()){
+        if(post.isEmpty()){
             throw new NotFoundException("There is no post with given id!");
         }
         commentRepository.deleteAllByPost(post.get());
@@ -91,26 +91,26 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto likePost(Long id) {
+    public PostDto like(Long id) {
         Optional<Post> post = postRepositroy.findPostById(id);
-        if(!post.isPresent()){
+        if(post.isEmpty()){
             throw new NotFoundException("There is no post with given id!");
         }
         Post p = post.get();
         p.setLikes(p.getLikes() + 1);
         postRepositroy.save(p);
-        return postMapper.postToPostDto(p);
+        return postMapper.map(p);
     }
 
     @Override
-    public PostDto dislikePost(Long id) {
+    public PostDto dislike(Long id) {
         Optional<Post> post = postRepositroy.findPostById(id);
-        if(!post.isPresent()){
+        if(post.isEmpty()){
             throw new NotFoundException("There is no post with given id!");
         }
         Post p = post.get();
         p.setDislikes(p.getDislikes() + 1);
         postRepositroy.save(p);
-        return postMapper.postToPostDto(p);
+        return postMapper.map(p);
     }
 }

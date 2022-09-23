@@ -46,7 +46,8 @@ class CommentControllerTest {
 
     @Test
     void shouldCreateComment() throws Exception {
-        when(commentService.createComment(any(CommentDto.class))).thenReturn(new ResponseEntity<>(new CommentDto(11L, "TestComment", 3L), OK).getBody());
+        when(commentService.create(any(CommentDto.class))).thenReturn(new ResponseEntity<>(new CommentDto(11L, "TestComment",
+                3L), OK).getBody());
 
         Gson gson = new Gson();
         mvc.perform(post("/comment/create")
@@ -60,9 +61,11 @@ class CommentControllerTest {
 
     @Test
     void shouldUpdateComment() throws Exception {
-        when(commentService.updateComment(any(Long.class),any(CommentDto.class))).thenReturn(new ResponseEntity<>(new CommentDto(2L, "UpdateComment", 3L), OK).getBody());
+        when(commentService.update(any(Long.class),any(CommentDto.class))).thenReturn(new ResponseEntity<>(new CommentDto(2L, "UpdateComment",
+                3L), OK).getBody());
         Gson gson = new Gson();
-        mvc.perform(put("/comment/2").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(new CommentDto(2L, "UpdateComment", 3L))).accept(MediaType.APPLICATION_JSON))
+        mvc.perform(put("/comment/2").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(new CommentDto(2L, "UpdateComment",
+                        3L))).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.comment").value("UpdateComment"))
                 .andExpect(jsonPath("$.post_id").value(3L));

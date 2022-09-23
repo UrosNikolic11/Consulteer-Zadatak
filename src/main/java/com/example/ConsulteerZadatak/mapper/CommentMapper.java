@@ -19,25 +19,18 @@ public class CommentMapper {
         this.postRepositroy = postRepositroy;
     }
 
-    public Comment commentDtoToComment(CommentDto commentDto){
-        Optional<Post> post = postRepositroy.findPostById(commentDto.getPost_id());
-        Comment comment = new Comment();
+    public Comment map(CommentDto commentDto){
+        Optional<Post> post = postRepositroy.findPostById(commentDto.getPostId());
         if(commentDto.getComment().equals("")){
             throw new BadRequestException("Comment content is reqiured!");
         }
-        else comment.setComment(commentDto.getComment());
-        if(!post.isPresent()){
+        if(post.isEmpty()){
             throw new NotFoundException("There is no post with given id.");
         }
-        else comment.setPost(post.get());
-        return comment;
+        return new Comment(null, commentDto.getComment(), post.get());
     }
 
-    public CommentDto commentToCommentDto(Comment comment){
-        CommentDto commentDto = new CommentDto();
-        commentDto.setId(comment.getId());
-        commentDto.setComment(comment.getComment());
-        commentDto.setPost_id(comment.getPost().getId());
-        return commentDto;
+    public CommentDto map(Comment comment){
+        return new CommentDto(comment.getId(), comment.getComment(), comment.getPost().getId());
     }
 }

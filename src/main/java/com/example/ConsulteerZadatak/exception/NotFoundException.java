@@ -1,5 +1,6 @@
 package com.example.ConsulteerZadatak.exception;
 
+import com.example.ConsulteerZadatak.exception.model.ErrorCode;
 import org.springframework.http.HttpStatus;
 
 public class NotFoundException extends CustomException {

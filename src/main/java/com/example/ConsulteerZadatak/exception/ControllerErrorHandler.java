@@ -1,4 +1,4 @@
-package com.example.ConsulteerZadatak.controller;
+package com.example.ConsulteerZadatak.exception;
 
 import com.example.ConsulteerZadatak.exception.model.Message;
 import com.google.gson.Gson;
