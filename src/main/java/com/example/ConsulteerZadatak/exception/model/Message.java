@@ -1,4 +1,4 @@
-package com.example.ConsulteerZadatak.exception;
+package com.example.ConsulteerZadatak.exception.model;
 
 public class Message {
     private String error;
